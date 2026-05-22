@@ -1,0 +1,19 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isOwner() {
+      return request.auth != null && request.auth.token.email == "25011cseai0144@aiml.suh.edu.in";
+    }
+
+    match /categories/{imageName} {
+      allow read: if true;
+      allow write, delete: if isOwner();
+    }
+
+    match /products/{imageName} {
+      allow read: if true;
+      allow write, delete: if isOwner();
+    }
+  }
+}
